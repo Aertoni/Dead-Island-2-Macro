@@ -6,6 +6,9 @@ on:
     tags: ['v*']
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -17,7 +20,10 @@ jobs:
         uses: Banaanae/Action-Ahk2Exe@main
         with:
           in: "DeadIsland2_Macro.ahk"
-          out: build
+          out: "build/DeadIsland2_Macro.exe"
+
+      - name: List build outputs
+        run: dir build
 
       - name: Release
         uses: softprops/action-gh-release@v2
