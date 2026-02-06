@@ -1,0 +1,25 @@
+name: Build AHK Script
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile (Ahk2Exe)
+        uses: Banaanae/Action-Ahk2Exe@main
+        with:
+          in: "DeadIsland2_Macro.ahk"
+          out: build
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.exe
